@@ -154,7 +154,7 @@ class SendingQueue:
                 self.logging.exception(exception)
 
                 self.status.fail(priority)
-                return False
+                return True
         else:
             return False
 
