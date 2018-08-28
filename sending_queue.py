@@ -133,7 +133,7 @@ class SendingQueue:
         self.logging.debug('Add again: {}'.format(hash(message)))
         self.queue.put((priority, added_time, message))
 
-    def send_message(self, message):
+    def send_message(self, message, priority=None):
         now_time = time()
         if not self.time_queue.full or\
                 self.time_queue.empty() or\
@@ -146,11 +146,15 @@ class SendingQueue:
             try:
                 self.logging.info('Send: {}'.format(hash(message)))
                 message.send(self.bot)
+
+                self.status.succeed(priority)
                 return True
             except ApiException as exception:
                 # It's telegram errors
                 self.logging.exception(exception)
-                return True
+
+                self.status.fail(priority)
+                return False
         else:
             return False
 
@@ -160,7 +164,7 @@ class SendingQueue:
                 last_message = self.queue.get()
                 self.logging.debug('Get from queue: {}'.format(
                     hash(last_message[-1])))
-                if not self.send_message(last_message[-1]):
+                if not self.send_message(last_message[-1], last_message[0]):
                     self.add_prepared_message(PRIORITY['repeat'], time(),
                                               last_message[-1])
 
