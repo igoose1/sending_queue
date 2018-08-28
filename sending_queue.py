@@ -75,11 +75,33 @@ class PhotoMessage:
 
 
 class SendingQueue:
-    def __init__(self, bot, logger=None):
+    class Status:
+        def __init__(self, detailed=True):
+            self.succeed_count = 0
+            self.failed_count = 0
+            self.detailed = detailed
+            if self.detailed:
+                self.detailed_succeed_count = dict()
+                self.detailed_failed_count = dict()
+
+        def succeed(self, priority=None, count=1):
+            self.succeed_count += count
+            if self.detailed:
+                self.detailed_succeed_count[priority] =\
+                    self.detailed_succeed_count.get(priority, 0) + count
+
+        def fail(self, priority=None, count=1):
+            self.failed_count += count
+            if self.detailed:
+                self.detailed_failed_count[priority] =\
+                    self.detailed_failed_count.get(priority, 0) + count
+
+    def __init__(self, bot, logger=None, status_detailed=True):
         self.logging = logger or logging
         self.queue = queue.PriorityQueue()
         self.time_queue = queue.Queue(maxsize=MAX_MESSAGES_LIMIT)
         self.bot = bot
+        self.status = self.Status(status_detailed)
 
     def add_text_message(self, chat_id, text, added_time=None,
                          disable_web_page_preview=None,
