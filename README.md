@@ -100,3 +100,10 @@ To add other types of messages use these functions.
 | will be later       | `sendAnimation`   |
 | will be later       | `sendVoice`       |
 | will be later       | `sendAudio`       |
+
+#### Logging
+
+If you want to use your own logger set it by argument `logger`.
+```python3
+queue = sending_queue.SendingQueue(bot, my_logger)
+```
