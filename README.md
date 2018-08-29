@@ -6,14 +6,23 @@ It's a module for sending messages by telegram bot api using queue.
 Queue sends only 30 messages per second.
 
 > If you're sending bulk notifications to multiple users, the API will not allow more than 30 messages per second or so.
+>
+> [My bot is hitting limits, how do I avoid this?](https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)
 
-[My bot is hitting limits, how do I avoid this?](https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)
+* [Preparing](#preparing)
+* [Usage](#usage)
+  * [Init](#init)
+  * [Poll](#poll)
+  * [Send text message](#send-text-message)
+  * [Priority of messages](#priority-of-messages)
+  * [Get status of messages](#get-status-of-messages)
+  * [Send other content](#send-other-content)
+  * [Logging](#logging)
 
 Preparing
 ---------
 
 Move `sending_queue.py` to your project's folder.
-
 
 Usage
 -----
