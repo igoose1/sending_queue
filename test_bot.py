@@ -13,4 +13,5 @@ def help(message):
 
 
 if __name__ == '__main__':
+    queue.polling()
     bot.polling(none_stop=True)
