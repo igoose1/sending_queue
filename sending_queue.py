@@ -122,7 +122,7 @@ class SendingQueue:
                            disable_notification)
 
         self.logging.debug('Add text message: {}'.format(hash(text)))
-        self.waiting(priority)
+        self.status.waiting(priority)
         self.queue.put((priority, added_time, text))
 
     def add_photo_message(self, chat_id, photo, added_time=None, caption=None,
@@ -135,12 +135,12 @@ class SendingQueue:
                              disable_notification)
 
         self.logging.debug('Add photo message: {}'.format(hash(photo)))
-        self.waiting(priority)
+        self.status.waiting(priority)
         self.queue.put((priority, added_time, photo))
 
     def add_prepared_message(self, priority, added_time, message):
         self.logging.debug('Add prepared message: {}'.format(hash(message)))
-        self.waiting(priority)
+        self.status.waiting(priority)
         self.queue.put((priority, added_time, message))
 
     def send_message(self, message, priority=None):
