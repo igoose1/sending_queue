@@ -105,5 +105,5 @@ To add other types of messages use these functions.
 
 If you want to use your own logger set it by argument `logger`.
 ```python3
-queue = sending_queue.SendingQueue(bot, my_logger)
+queue = sending_queue.SendingQueue(bot, logger=my_logger)
 ```
