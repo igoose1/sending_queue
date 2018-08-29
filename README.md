@@ -44,7 +44,7 @@ queue.add_text_message(message.chat.id, 'Some strange words')
 #### Priority of messages
 You can change message priority.
 Standart message's priority is 10.
-Messages with lower priority will send earlier.
+Messages with lower priority will be sent earlier.
 
 ```python3
 queue.add_text_message(message.chat.id, 'Important message', priority=5)
@@ -52,8 +52,8 @@ queue.add_text_message(message.chat.id, 'Not important message', priority=20)
 queue.add_text_message(message.chat.id, 'Most important message', priority=1)
 ```
 
-In queue if messages have the same priority they will send by added time.
-Queue remembers time itself but you can set your own.
+In queue if messages have the same priority they will be sent by added time.
+Queue remembers time itself but you can set your own time.
 
 ```python3
 import time
