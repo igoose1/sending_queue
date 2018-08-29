@@ -139,7 +139,6 @@ class SendingQueue:
         self.queue.put((priority, added_time, photo))
 
     def add_prepared_message(self, priority, added_time, message):
-        print(message.text)
         self.logging.debug('Add prepared message: {}'.format(hash(message)))
         self.waiting(priority)
         self.queue.put((priority, added_time, message))
