@@ -79,10 +79,12 @@ class SendingQueue:
         def __init__(self, detailed=True):
             self.succeed_count = 0
             self.failed_count = 0
+            self.waiting_count = 0
             self.detailed = detailed
             if self.detailed:
                 self.detailed_succeed_count = dict()
                 self.detailed_failed_count = dict()
+                self.detailed_waiting_count = dict()
 
         def succeed(self, priority=None, count=1):
             self.succeed_count += count
@@ -95,6 +97,12 @@ class SendingQueue:
             if self.detailed:
                 self.detailed_failed_count[priority] =\
                     self.detailed_failed_count.get(priority, 0) + count
+
+        def waiting(self, priority=None, count=1):
+            self.waiting += count
+            if self.detailed:
+                self.detailed_waiting[priority] =\
+                    self.detailed_waiting.get(priority, 0) + count
 
     def __init__(self, bot, logger=None, status_detailed=True):
         self.logging = logger or logging
@@ -114,6 +122,7 @@ class SendingQueue:
                            disable_notification)
 
         self.logging.debug('Add text message: {}'.format(hash(text)))
+        self.waiting(priority)
         self.queue.put((priority, added_time, text))
 
     def add_photo_message(self, chat_id, photo, added_time=None, caption=None,
@@ -126,11 +135,13 @@ class SendingQueue:
                              disable_notification)
 
         self.logging.debug('Add photo message: {}'.format(hash(photo)))
+        self.waiting(priority)
         self.queue.put((priority, added_time, photo))
 
     def add_prepared_message(self, priority, added_time, message):
         print(message.text)
         self.logging.debug('Add prepared message: {}'.format(hash(message)))
+        self.waiting(priority)
         self.queue.put((priority, added_time, message))
 
     def send_message(self, message, priority=None):
@@ -167,6 +178,8 @@ class SendingQueue:
                 if not self.send_message(last_message[-1], last_message[0]):
                     self.add_prepared_message(PRIORITY['repeat'], time(),
                                               last_message[-1])
+                else:
+                    self.status.waiting(last_message[0], count=-1)
 
     def polling(self):
         queue_thread = threading.Thread(target=self.check_queue)
