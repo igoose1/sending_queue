@@ -101,8 +101,8 @@ class SendingQueue:
         def waiting(self, priority=None, count=1):
             self.waiting_count += count
             if self.detailed:
-                self.detailed_waiting[priority] =\
-                    self.detailed_waiting.get(priority, 0) + count
+                self.detailed_waiting_count[priority] =\
+                    self.detailed_waiting_count.get(priority, 0) + count
 
     def __init__(self, bot, logger=None, status_detailed=True):
         self.logging = logger or logging
