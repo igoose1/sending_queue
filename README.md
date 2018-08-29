@@ -45,7 +45,7 @@ queue.polling()
 ```
 
 #### Send text message
-To send text message add it to queue.
+To send text message add it to queue. Queue will send it if you started polling.
 ```python3
 queue.add_text_message(message.chat.id, 'Some strange words')
 ```
