@@ -33,7 +33,7 @@ Init bot and queue.
 import telebot
 import sending_queue
 
-token = "<TOKEN>"
+token = '<TOKEN>'
 bot = telebot.TeleBot(token)
 queue = sending_queue.SendingQueue(bot)
 ```
