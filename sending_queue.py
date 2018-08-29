@@ -99,7 +99,7 @@ class SendingQueue:
                     self.detailed_failed_count.get(priority, 0) + count
 
         def waiting(self, priority=None, count=1):
-            self.waiting += count
+            self.waiting_count += count
             if self.detailed:
                 self.detailed_waiting[priority] =\
                     self.detailed_waiting.get(priority, 0) + count
